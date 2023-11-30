@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kentyou.assistiot.cheaas</groupId>
+    <artifactId>repository-generator</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Kentyou CHEaaS Repository Generator</name>
+    <description>Generates the Maven repository for Eclipes sensiNact</description>
+
+    <properties>
+        <sensinact.version>0.0.2-SNAPSHOT</sensinact.version>
+        <jetty.version>11.0.13</jetty.version>
+        <repo.dir>repository</repo.dir>
+    </properties>
+
+    <dependencies>
+        <!-- SensiNact -->
+        <dependency>
+            <groupId>org.eclipse.sensinact.gateway.southbound.device-factory</groupId>
+            <artifactId>device-factory-core</artifactId>
+            <version>${sensinact.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.sensinact.gateway.southbound.device-factory</groupId>
+            <artifactId>parser-json</artifactId>
+            <version>${sensinact.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.sensinact.gateway.southbound.mqtt</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>${sensinact.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.sensinact.gateway.southbound.mqtt</groupId>
+            <artifactId>mqtt-device-factory</artifactId>
+            <version>${sensinact.version}</version>
+        </dependency>
+
+        <!-- CHEaaS modules -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>cheaas-rest</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-feature-repo</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <excludeTransitive>true</excludeTransitive>
+                            <includeScope>runtime</includeScope>
+                            <useRepositoryLayout>true</useRepositoryLayout>
+                            <outputDirectory>${repo.dir}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${repo.dir}</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                            <excludes>
+                                <include>.gitignore</include>
+                            </excludes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
