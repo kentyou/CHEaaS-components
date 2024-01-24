@@ -1,0 +1,6 @@
+apiVersion: v2
+name: sensinact
+description: Eclipse sensiNact instance for the Assist-IoT CHEaaS project
+type: application
+version: 0.1.0
+appVersion: "0.0.2"

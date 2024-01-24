@@ -1,0 +1,13 @@
+{
+  "id": "com.kentyou.datahub.features:device-factory-feature:osgifeature:0.0.2-SNAPSHOT",
+  "bundles": [
+    { "id": "org.eclipse.sensinact.gateway.southbound.device-factory:device-factory-core:0.0.2-SNAPSHOT" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.device-factory:parser-json:0.0.2-SNAPSHOT" },
+    { "id": "org.eclipse.jetty:jetty-client:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-alpn-client:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-http:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-io:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-util:11.0.13" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.http:http-device-factory:0.0.2-SNAPSHOT" }
+  ]
+}

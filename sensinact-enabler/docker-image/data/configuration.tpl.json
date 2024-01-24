@@ -1,0 +1,182 @@
+{
+  ":configurator:resource-version": 1,
+  ":configurator:symbolic-name": "org.eclipse.sensinact.gateway.configuration",
+  ":configurator:version": "0.0.1",
+  "sensinact.launcher": {
+    "features": [
+      "core-feature",
+      "jakarta-servlet-whiteboard-feature",
+      "jakarta-rest-whiteboard-feature",
+      "northbound-rest-feature",
+      "mqtt-feature",
+      "weather-feature",
+      "shell"
+    ],
+    "repository": [
+      "repository",
+      "ext-repository"
+    ],
+    "featureDir": [
+      "features",
+      "ext-features"
+    ]
+  },
+  "org.apache.felix.http": {
+    "org.osgi.service.http.port": {{ http_port }},
+    "org.apache.felix.http.name": "sensiNact"
+  },
+  "JakartarsServletWhiteboardRuntimeComponent": {
+    "osgi.jakartars.name": "sensiNact.rest",
+    "osgi.http.whiteboard.target": "(org.apache.felix.http.name=sensiNact)"
+  },
+  "sensinact.northbound.rest": {
+    "allow.anonymous": true,
+    "osgi.jakartars.whiteboard.target": "(osgi.jakartars.name=sensiNact.rest)"
+  },
+  "sensinact.southbound.mqtt~assist-iot-edbe": {
+    "id": "edbe",
+    "host": {{ mqtt_host }},
+    "port": {{ mqtt_port }},
+    "topics": [
+        {{ mqtt_topic }}
+    ]
+  },
+  "sensinact.mqtt.device.factory~assist-iot-che": {
+    "mqtt.topics": {{ mqtt_topic }},
+    "mapping": {
+      "parser": "json",
+      "mapping": {
+        "$sender": "sender",
+        "@model": {
+          "literal": "assist-iot-che"
+        },
+        "@provider": {
+          "literal": "che-${sender}"
+        },
+        "@latitude": "Y:DB591,R354;X:DB591,R358/0",
+        "@longitude": "Y:DB591,R354;X:DB591,R358/1",
+        "@datetime": "timestamp",
+        "@friendlyName": "name",
+        "che/id": "id",
+        "che/name": "name",
+        "che/type": "type",
+        "che/brand": "brand",
+        "che/number": "number",
+        "che/family": "family",
+        "che/tic_version": "TicVersion",
+        "control/contactor_on_gantry1_result_status": "DB920,X1.6",
+        "control/control_hoist_at_center_feedback_status": "DB920,X3.1",
+        "drive/left_result_status": "DB920,X12.3",
+        "drive/right_feedback_status": "DB920,X34.3",
+        "hoist/hoist_trim_left_command_status": "DB920,X198.0",
+        "hoist/hoist_trim_right_command_status": "DB920,X198.1",
+        "hoist/up_result_status": "DB920,X198.4",
+        "hoist/down_result_status": "DB920,X173.4",
+        "control/idle_feedback_status": "DB920,X204.0",
+        "spreader/size_20_ft_status": "DB920,X224.3",
+        "spreader/size_30_ft_status": "DB920,X224.4",
+        "spreader/size_40_ft_status": "DB920,X224.7",
+        "spreader/size_45_ft_status": "DB920,X225.2",
+        "spreader/all_flipper_down_status": "DB920,X225.3",
+        "spreader/all_flipper_up_status": "DB920,X225.4",
+        "spreader/any_flipper_down_status": "DB920,X225.5",
+        "spreader/spreader_expanding_request_status": "DB920,X225.7",
+        "spreader/retracting_request_status": "DB920,X226.0",
+        "spreader/landed_status": "DB920,X226.1",
+        "spreader/lashinggage_feedback_status": "DB920,X226.2",
+        "spreader/spreader_list_reverse_request_status": "DB920,X230.3",
+        "spreader/lock_status": "DB920,X230.6",
+        "spreader/single_result_status": "DB920,X231.4",
+        "spreader/skew_ccw_feedback_status": "DB920,X231.6",
+        "spreader/skew_cw_feedback_status": "DB920,X232.0",
+        "spreader/twin_status": "DB920,X232.4",
+        "spreader/unlock_status": "DB920,X232.7",
+        "control/stopping_request_status": "DB920,X233.0",
+        "control/traction_wheels_parking_result_status": "DB920,X234.4",
+        "trolley/backreach_status": "DB920,X234.6",
+        "trolley/forward_result_status": "DB920,X235.4",
+        "trolley/trolley_land_feedback_status": "DB920,X240.1",
+        "trolley/on_status": "DB920,X240.2",
+        "trolley/troll_reverse_result_status": "DB920,X246.2",
+        "trolley/troll_sea_feedback_status": "DB920,X256.0",
+        "trolley/move_left_right": {
+          "path": "DB920,REAL242",
+          "type": "float"
+        },
+        "control/fault_status": "DB920,X173.0",
+        "crane/driving_speed": {
+          "path": "DB920,REAL22",
+          "type": "float"
+        },
+        "crane/driving_speed_unit": {
+          "literal": "m/s"
+        },
+        "crane/driving_total_distance": {
+          "path": "DB920,REAL30",
+          "type": "float"
+        },
+        "crane/driving_total_distance_unit": {
+          "literal": "m"
+        },
+        "crane/location_accuracy": {
+          "path": "DB920,REAL156",
+          "type": "float"
+        },
+        "hoist/height": {
+          "path": "DB920,REAL178",
+          "type": "float"
+        },
+        "hoist/height_unit": {
+          "literal": "m"
+        },
+        "hoist/hoisting_speed": {
+          "path": "DB920,REAL194",
+          "type": "float"
+        },
+        "hoist/hoisting_speed_unit": {
+          "literal": "m/min"
+        },
+        "spreader/size": "DB920,INT228",
+        "spreader/size_unit": {
+          "literal": "TEU"
+        }
+      }
+    }
+  },
+  "sensinact.http.device.factory~weather_malta_freeport": {
+    "tasks.periodic": [
+      {
+        "period": 600,
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=35.8171&longitude=14.5346&current_weather=true",
+        "mapping": {
+          "parser": "json",
+          "mapping": {
+            "@provider": {
+              "literal": "malta_freeport_weather"
+            },
+            "@name": {
+              "literal": "Malta Freeport Weather"
+            },
+            "@latitude": "latitude",
+            "@longitude": "longitude",
+            "@elevation": "elevation",
+            "@datetime": "current_weather/time",
+            "weather/temperature": {
+              "path": "current_weather/temperature",
+              "type": "float"
+            },
+            "weather/wind-speed": {
+              "path": "current_weather/windspeed",
+              "type": "float"
+            },
+            "weather/wind-direction": {
+              "path": "current_weather/winddirection",
+              "type": "int"
+            },
+            "weather/weather-code": "current_weather/weathercode"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id":"org.eclipse.sensinact.gateway.distribution.features:cognifog-mqtt:core-feature:osgifeature:0.0.2-SNAPSHOT",
+  "bundles":[
+    { "id": "com.fasterxml.jackson.core:jackson-annotations:2.16.1" },
+    { "id": "com.fasterxml.jackson.core:jackson-core:2.16.1" },
+    { "id": "com.fasterxml.jackson.core:jackson-databind:2.16.1" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.device-factory:device-factory-core:0.0.2-SNAPSHOT" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.device-factory:parser-json:0.0.2-SNAPSHOT" },
+    { "id": "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.mqtt:mqtt-client:0.0.2-SNAPSHOT" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.mqtt:mqtt-device-factory:0.0.2-SNAPSHOT" }
+  ]
+}

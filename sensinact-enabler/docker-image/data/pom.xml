@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.kentyou.assistiot.cheaas</groupId>
+  <artifactId>cheaas-repo-generator</artifactId>
+  <version>0.0.2</version>
+  <packaging>pom</packaging>
+  <name>Repository generator</name>
+
+  <properties>
+    <sensinact.version>0.0.2-SNAPSHOT</sensinact.version>
+    <jetty.version>11.0.16</jetty.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>eclipse-sensinact</id>
+      <url>https://repo.eclipse.org/content/groups/sensinact/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- Eclipse sensiNact Device Factory Core -->
+    <dependency>
+      <groupId>org.eclipse.sensinact.gateway.southbound.device-factory</groupId>
+      <artifactId>device-factory-core</artifactId>
+      <version>${sensinact.version}</version>
+    </dependency>
+
+    <!-- Eclipse sensiNact Device Factory JSON parser -->
+    <dependency>
+      <groupId>org.eclipse.sensinact.gateway.southbound.device-factory</groupId>
+      <artifactId>parser-json</artifactId>
+      <version>${sensinact.version}</version>
+    </dependency>
+
+    <!-- MQTT device factory -->
+    <dependency>
+      <groupId>org.eclipse.paho</groupId>
+      <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.sensinact.gateway.southbound.mqtt</groupId>
+      <artifactId>mqtt-client</artifactId>
+      <version>${sensinact.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.sensinact.gateway.southbound.mqtt</groupId>
+      <artifactId>mqtt-device-factory</artifactId>
+      <version>${sensinact.version}</version>
+    </dependency>
+
+    <!-- HTTP device factory -->
+    <dependency>
+      <groupId>org.eclipse.sensinact.gateway.southbound.http</groupId>
+      <artifactId>http-device-factory</artifactId>
+      <version>${sensinact.version}</version>
+    </dependency>
+
+    <!-- Jetty client -->
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-client</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-alpn-client</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-http</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-io</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-util</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <!-- Copy dependencies of this project in a Maven repository-structured folder -->
+            <id>create-feature-repo</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <!--
+                It is recommended to exclude transitive dependencies
+                and to explicitly declare them as feature dependencies
+              -->
+              <excludeTransitive>true</excludeTransitive>
+              <!-- Configuration to have a Maven repository layout in the target directory -->
+              <useRepositoryLayout>true</useRepositoryLayout>
+              <!-- Add the JARs to the repository folder -->
+              <outputDirectory>ext-repository</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -11,8 +11,9 @@ This project is released under the terms of the [Eclipse Public License v2.0](./
 * `data-sender`: A Python script that can replay recorded data.
 * `rest-health-endpoint`: Implementation of the ASSIST-IoT enablers REST endpoint, providing status information and metrics.
 * `sensinact-run`: Run environment for an Eclipse sensiNact instance with CHEaaS support.
+* `sensinact-enabler`: A docker image definition and an Helm Chart to deploy it in an ASSIST-IoT Kubernetes architecture.
 
-## Eclipse sensiNact setup
+## Eclipse sensiNact composition setup
 
 1. Compile the REST health endpoint with Maven:
    ```bash
