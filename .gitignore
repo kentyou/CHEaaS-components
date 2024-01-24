@@ -1,0 +1,23 @@
+# IDEs
+.vscode
+.idea
+*.iml
+.project
+.classpath
+.settings
+*~
+
+# Hidden files
+.*
+!.*ignore
+!.editorconfig
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Java
+build/
+target/
+*.class
