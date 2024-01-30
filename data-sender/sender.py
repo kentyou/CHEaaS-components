@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2023 Kentyou.
+# Copyright (c) 2024 Kentyou.
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v2.0
 # which accompanies this distribution, and is available at
@@ -22,7 +22,7 @@ import paho.mqtt.client
 import tqdm
 
 __author__ = "thomas.calmant@kentyou.com"
-__copyright__ = "Copyright 2023 Kentyou"
+__copyright__ = "Copyright 2024 Kentyou"
 
 
 @dataclass
@@ -30,6 +30,7 @@ class MQTTConf:
     """
     Configuration of the MQTT link
     """
+
     topic: str = "assist-iot/push"
     host: str = "broker.hivemq.com"
     port: int = 1883
@@ -75,7 +76,10 @@ class MQTTClient:
         if self.client is not None:
             self.disconnect()
 
-        self.client = paho.mqtt.client.Client(reconnect_on_failure=True)
+        self.client = paho.mqtt.client.Client(
+            reconnect_on_failure=True, clean_session=True
+        )
+        self.client.loop_start()
         if self.__conf.user and self.__conf.password:
             self.client.username_pw_set(self.__conf.user, self.__conf.password)
         self.client.connect(self.__conf.host, self.__conf.port)
@@ -87,22 +91,26 @@ class MQTTClient:
         """
         if self.client is not None:
             self.client.disconnect()
+            self.client.loop_stop()
             self.client = None
 
-    def send_raw(self, data: bytes) -> None:
+    def send_raw(self, data: bytes, topic: Optional[str] = None) -> None:
         """
         Send the data as is
         """
         if self.client is None:
             raise Exception("MQTT client is not connected")
 
-        self.client.publish(self.__conf.topic, data, qos=self.__conf.qos)
+        info = self.client.publish(
+            topic or self.__conf.topic, data, qos=self.__conf.qos
+        )
+        info.wait_for_publish()
 
-    def send_json(self, data: Dict[str, Any]) -> None:
+    def send_json(self, data: Dict[str, Any], topic: Optional[str] = None) -> None:
         """
         Sends JSON data as UTF-8
         """
-        self.send_raw(json.dumps(data).encode("utf-8"))
+        self.send_raw(json.dumps(data).encode("utf-8"), topic)
 
 
 def delta(previous: Dict[str, Any], new: Dict[str, Any]) -> str:
@@ -124,7 +132,17 @@ def delta(previous: Dict[str, Any], new: Dict[str, Any]) -> str:
     return ", ".join(messages)
 
 
-def main(argv=None) -> int:
+@dataclass
+class InputOptions:
+    """
+    Holds configuration of each input
+    """
+
+    file_path: pathlib.Path
+    topic: Optional[str] = None
+
+
+def main(argv: Optional[List[str]] = None) -> int:
     """
     Script entrypoint
     """
@@ -133,7 +151,12 @@ def main(argv=None) -> int:
 
     group = parser.add_argument_group("Input", "Input file")
     group.add_argument(
-        "-i", "--input", required=True, type=pathlib.Path, help="Input file"
+        "-i",
+        "--input",
+        required=True,
+        action="append",
+        nargs="+",
+        metavar=("FILE", "[MQTT_TOPIC]"),
     )
     group.add_argument("--delay", type=float, default=1.0, help="Delay between entries")
     group.add_argument("--loop", action="store_true", help="Loop entries")
@@ -141,7 +164,7 @@ def main(argv=None) -> int:
     group = parser.add_argument_group("MQTT", "Options to send data to MQTT")
     group.add_argument("--mqtt-host", help="MQTT broker host")
     group.add_argument("--mqtt-port", type=int, help="MQTT broker port")
-    group.add_argument("--mqtt-topic", help="MQTT broker topic")
+    group.add_argument("--mqtt-topic", help="MQTT broker topic to use by default")
     group.add_argument(
         "--mqtt-qos", type=int, choices=(0, 1, 2), help="MQTT Quality of Service"
     )
@@ -153,22 +176,25 @@ def main(argv=None) -> int:
     if options.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    # Options
+    # Common options
     loop = cast(bool, options.loop)
     delay = cast(float, options.delay)
 
-    # Check file
-    input_file = cast(pathlib.Path, options.input)
-    if not input_file.exists():
-        logging.error("File not found: %s", input_file)
-        return 1
+    # Parse inputs
+    inputs: List[InputOptions] = []
+    for idx, input_args in enumerate(cast(List[str], options.input), 1):
+        path = pathlib.Path(input_args[0]).absolute()
+        if not path.exists():
+            logging.error("File not found: %s", path)
+            return 1
 
-    try:
-        with open(input_file, "r", encoding="utf-8") as fd:
-            data = cast(List[Dict[str, Any]], json.load(fd))
-    except IOError as ex:
-        logging.error("Error reading input file '%s': %s", input_file, ex)
-        return 1
+        if len(input_args) == 1:
+            inputs.append(InputOptions(path))
+        elif len(input_args) == 2:
+            inputs.append(InputOptions(path, input_args[1]))
+        else:
+            logging.error("Too many arguments in input arguments %d", idx)
+            return 1
 
     # Prepare MQTT client
     mqtt_conf = load_mqtt_conf(options)
@@ -183,17 +209,27 @@ def main(argv=None) -> int:
         run = True
         while run:
             run = loop
-            print("Sending data from start...")
-            previous = {}
-            progress = tqdm.tqdm(data)
-            for entry in progress:
-                if entry != previous:
-                    progress.write(f"Data changed: {delta(previous, entry)}")
+            for source in tqdm.tqdm(inputs, desc="Sources"):
+                print("Sending data from start...", source.file_path.name)
+                try:
+                    with open(source.file_path, "r", encoding="utf-8") as fd:
+                        data = cast(List[Dict[str, Any]], json.load(fd))
+                except IOError as ex:
+                    logging.error(
+                        "Error reading input file '%s': %s", source.file_path, ex
+                    )
+                    return 1
 
-                previous = entry
-                mqtt.send_json(entry)
-                time.sleep(delay)
-            print("End of data.")
+                previous: Dict[str, Any] = {}
+                progress = tqdm.tqdm(data, desc=source.file_path.name)
+                for entry in progress:
+                    if entry != previous:
+                        progress.write(f"Data changed: {delta(previous, entry)}")
+
+                    previous = entry
+                    mqtt.send_json(entry, source.topic)
+                    time.sleep(delay)
+                print("End of data in", source.file_path.name)
     except KeyboardInterrupt:
         print("Got Ctrl+C. Abandon.", file=sys.stderr)
         return 127
@@ -208,5 +244,5 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except KeyboardInterrupt:
-        # Double Ctrl+C
+        # Handle Ctrl+C
         sys.exit(127)
