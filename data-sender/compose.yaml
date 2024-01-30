@@ -2,8 +2,8 @@ services:
   sender-cheaas:
     build: .
     stdin_open: true
-    command: ["--input", "/opt/payload.json"]
+    command: ["--input", "/opt/data/payload.json"]
     tty: true
     volumes:
-      - ./payload.json:/opt/payload.json:ro
+      - ./data:/opt/data/:ro
     container_name: sender-cheaas

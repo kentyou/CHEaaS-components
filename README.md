@@ -65,7 +65,7 @@ To test the bridge, you can replay a sample of the CHE data available in the [AS
 ### Run the sender script in Docker
 
 1. Download a data sample. We will then consider its name is `payload.json`
-2. Copy `payload.json` to the `data-sender/` folder
+2. Copy `payload.json` to the `data-sender/data` folder
 3. Update the `data-sender/compose.yaml` file to ensure that:
    * the input payload binding is correct
    * the script `--input` argument points to the right place
