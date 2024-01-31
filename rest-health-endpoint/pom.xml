@@ -22,6 +22,10 @@
   <name>SensiNact Northbound REST for ASSIST-IoT</name>
   <description>Northbound REST access to sensiNact health</description>
 
+  <properties>
+    <osgitech.rest.version>1.2.2</osgitech.rest.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.eclipse.sensinact.gateway.core</groupId>
@@ -181,20 +185,29 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Gecko -->
+    <!-- REST tests -->
     <dependency>
-      <groupId>org.geckoprojects.jakartars</groupId>
-      <artifactId>org.gecko.rest.jersey.config</artifactId>
+      <groupId>org.eclipse.osgi-technology.rest</groupId>
+      <artifactId>org.eclipse.osgitech.rest</artifactId>
+      <version>${osgitech.rest.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.geckoprojects.jakartars</groupId>
-      <artifactId>org.gecko.rest.jersey.sse</artifactId>
+      <groupId>org.eclipse.osgi-technology.rest</groupId>
+      <artifactId>org.eclipse.osgitech.rest.config</artifactId>
+      <version>${osgitech.rest.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.geckoprojects.jakartars</groupId>
-      <artifactId>org.gecko.rest.jersey.jetty</artifactId>
+      <groupId>org.eclipse.osgi-technology.rest</groupId>
+      <artifactId>org.eclipse.osgitech.rest.sse</artifactId>
+      <version>${osgitech.rest.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.osgi-technology.rest</groupId>
+      <artifactId>org.eclipse.osgitech.rest.jetty</artifactId>
+      <version>${osgitech.rest.version}</version>
       <scope>test</scope>
     </dependency>
 
