@@ -28,6 +28,13 @@
   </repositories>
 
   <dependencies>
+    <!-- CHEaaS Health endpoint implementation -->
+    <dependency>
+      <groupId>com.kentyou.assistiot.cheaas</groupId>
+      <artifactId>cheaas-rest</artifactId>
+      <version>0.0.2-SNAPSHOT</version>
+    </dependency>
+
     <!-- Eclipse sensiNact Device Factory Core -->
     <dependency>
       <groupId>org.eclipse.sensinact.gateway.southbound.device-factory</groupId>
@@ -117,7 +124,7 @@
               <!-- Configuration to have a Maven repository layout in the target directory -->
               <useRepositoryLayout>true</useRepositoryLayout>
               <!-- Add the JARs to the repository folder -->
-              <outputDirectory>ext-repository</outputDirectory>
+              <outputDirectory>data/ext-repository</outputDirectory>
             </configuration>
           </execution>
         </executions>

@@ -2,10 +2,9 @@
 
 ## Build image
 
-You can use the `./build.sh` script that:
-
-1. Prepares the Eclipse sensiNact repository: `mvn -f data/pom.xml clean prepare-package`
-2. Builds the image: `docker build -t sensinact:0.0.2-SNAPSHOT-CHEAAS .`
+1. Make sure that the REST health endpoint has been compiled: `mvn -f ../../rest-health-endpoint/pom.xml clean install`
+2. Prepares the Eclipse sensiNact repository: `mvn clean prepare-package`
+3. Builds the image: `docker build -t sensinact:0.0.2-SNAPSHOT-CHEAAS .`
 
 ## Container configuration
 
