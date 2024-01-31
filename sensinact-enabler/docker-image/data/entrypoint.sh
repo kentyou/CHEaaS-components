@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 TPL_FILE="/opt/sensinact/configuration.tpl.json"
 CONFIG_FILE="/opt/sensinact/configuration/configuration.json"
