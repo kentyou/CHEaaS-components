@@ -1,0 +1,23 @@
+{
+  "id": "org.eclipse.sensinact.gateway.distribution.features:cheeas-mqtt:core-feature:osgifeature:0.0.2-SNAPSHOT",
+  "bundles": [
+    { "id": "com.kentyou.assistiot.cheaas:cheaas-rest:0.0.2-SNAPSHOT" }
+  ],
+  "extensions": {
+    "sensinact.feature.depends": {
+      "kind": "mandatory",
+      "type": "artifacts",
+      "artifacts": [
+        {
+          "id": "org.eclipse.sensinact.gateway.distribution.features:core-feature:osgifeature:0.0.2-SNAPSHOT"
+        },
+        {
+          "id": "org.eclipse.sensinact.gateway.distribution.features:jakarta-rest-whiteboard-feature:osgifeature:0.0.2-SNAPSHOT"
+        },
+        {
+          "id": "org.eclipse.sensinact.gateway.distribution.features:northbound-rest-feature:osgifeature:0.0.2-SNAPSHOT"
+        }
+      ]
+    }
+  }
+}
