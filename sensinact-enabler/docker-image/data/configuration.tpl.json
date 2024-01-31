@@ -5,7 +5,7 @@
   "sensinact.launcher": {
     "features": [
       "core-feature",
-      "gogo-shell",
+      "gogo-shell-feature",
       "jakarta-servlet-whiteboard-feature",
       "jakarta-rest-whiteboard-feature",
       "northbound-rest-feature",
