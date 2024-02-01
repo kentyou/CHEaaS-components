@@ -20,7 +20,6 @@ import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsApplicationB
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
-import com.fasterxml.jackson.jakarta.rs.json.JacksonXmlBindJsonProvider;
 
 import jakarta.ws.rs.core.Application;
 
@@ -39,7 +38,7 @@ public class HealthAccessApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         return Set.of(BundleContextProvider.class, JacksonJsonProvider.class,
-                JacksonXmlBindJsonProvider.class, HealthNorthbound.class);
+                HealthNorthbound.class);
     }
 
     @Override

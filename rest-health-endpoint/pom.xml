@@ -21,10 +21,8 @@
   <artifactId>cheaas-rest</artifactId>
   <name>SensiNact Northbound REST for ASSIST-IoT</name>
   <description>Northbound REST access to sensiNact health</description>
-
-  <properties>
-    <osgitech.rest.version>1.2.2</osgitech.rest.version>
-  </properties>
+  
+  <packaging>jar</packaging>
 
   <dependencies>
     <dependency>
@@ -64,11 +62,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <!-- OSGi -->
@@ -185,29 +178,20 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- REST tests -->
+    <!-- REST Whiteboard -->
     <dependency>
       <groupId>org.eclipse.osgi-technology.rest</groupId>
       <artifactId>org.eclipse.osgitech.rest</artifactId>
-      <version>${osgitech.rest.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.osgi-technology.rest</groupId>
-      <artifactId>org.eclipse.osgitech.rest.config</artifactId>
-      <version>${osgitech.rest.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.osgi-technology.rest</groupId>
       <artifactId>org.eclipse.osgitech.rest.sse</artifactId>
-      <version>${osgitech.rest.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.osgi-technology.rest</groupId>
       <artifactId>org.eclipse.osgitech.rest.jetty</artifactId>
-      <version>${osgitech.rest.version}</version>
       <scope>test</scope>
     </dependency>
 
