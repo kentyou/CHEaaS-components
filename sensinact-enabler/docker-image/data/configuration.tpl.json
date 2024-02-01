@@ -34,6 +34,12 @@
     "allow.anonymous": true,
     "osgi.jakartars.whiteboard.target": "(osgi.jakartars.name=sensiNact.rest)"
   },
+  "sensinact.metrics": {
+    "enabled": true,
+    "provider.enabled": false,
+    "console.enabled": false,
+    "metrics.rate": 1
+  },
   "sensinact.southbound.mqtt~assist-iot-edbe": {
     "id": "edbe",
     "host": {{ mqtt_host }},
