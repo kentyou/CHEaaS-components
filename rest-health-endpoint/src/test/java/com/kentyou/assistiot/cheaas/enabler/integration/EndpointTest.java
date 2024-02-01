@@ -34,6 +34,8 @@ import org.osgi.test.junit5.cm.ConfigurationExtension;
 import org.osgi.test.junit5.context.BundleContextExtension;
 import org.osgi.test.junit5.service.ServiceExtension;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.ws.rs.core.Application;
 
 @ExtendWith({ ServiceExtension.class, ConfigurationExtension.class, BundleContextExtension.class })
@@ -41,6 +43,8 @@ public class EndpointTest {
 
     @InjectBundleContext
     BundleContext context;
+
+    final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     public void await(
@@ -73,7 +77,7 @@ public class EndpointTest {
     @Test
     void testVersion() throws Exception {
         final Version bundleVersion = context.getBundle().getVersion();
-        final Version restVersion = Version.parseVersion(utils.queryString("/version"));
+        final Version restVersion = Version.parseVersion(mapper.readValue(utils.queryString("/version"), String.class));
         assertEquals(bundleVersion, restVersion);
     }
 
