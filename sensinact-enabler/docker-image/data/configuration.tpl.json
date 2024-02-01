@@ -28,11 +28,10 @@
   },
   "JakartarsServletWhiteboardRuntimeComponent": {
     "osgi.jakartars.name": "sensiNact.rest",
-    "osgi.http.whiteboard.target": "(org.apache.felix.http.name=sensiNact)"
+    "osgi.http.whiteboard.target": "(osgi.http.endpoint=*)"
   },
   "sensinact.northbound.rest": {
-    "allow.anonymous": true,
-    "osgi.jakartars.whiteboard.target": "(osgi.jakartars.name=sensiNact.rest)"
+    "allow.anonymous": true
   },
   "sensinact.metrics": {
     "enabled": true,
