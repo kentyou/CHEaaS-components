@@ -2,7 +2,13 @@ services:
   sender-cheaas:
     build: .
     stdin_open: true
-    command: ["--input", "/opt/data/payload.json"]
+    command: [
+      "--mqtt-host", "mqtt-assist-iot",
+      "--delay", "0.1",
+      "--input", "/opt/data/rtg001log_20231026_moves.json", "assist-iot/v2",
+      "--input", "/opt/data/schema_semantic_moves.json", "assist-iot/v3",
+      "--input", "/opt/data/schema_big_moves.json", "assist-iot/v1/RTG001"
+    ]
     tty: true
     volumes:
       - ./data:/opt/data/:ro
