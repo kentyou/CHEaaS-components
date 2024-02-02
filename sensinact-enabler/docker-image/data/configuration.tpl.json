@@ -9,6 +9,7 @@
       "jakarta-servlet-whiteboard-feature",
       "jakarta-rest-whiteboard-feature",
       "northbound-rest-feature",
+      "northbound-websocket-feature",
       "assist-iot-health",
       "mqtt-feature",
       "weather-feature"
@@ -31,6 +32,9 @@
     "osgi.http.whiteboard.target": "(osgi.http.endpoint=*)"
   },
   "sensinact.northbound.rest": {
+    "allow.anonymous": true
+  },
+  "sensinact.northbound.websocket":  {
     "allow.anonymous": true
   },
   "sensinact.metrics": {
@@ -64,36 +68,45 @@
         },
         "@latitude": "DB591,R354",
         "@longitude": "DB591,R358",
-        "@timestamp": "_timestamp",
+        // "@timestamp": "_timestamp",
         "parser/payload-version": {
           "literal": "2023/09"
         },
-        "control/contactor_on_Gantry1_result_status": "DB920,X1.6",
-        "control/hoist_at_center_feedback_status": "DB920,X3.1",
+        "control/contactor_on_gantry1_result_status": {
+          "path": "DB920,X1.6",
+          "type": "boolean"
+        },
+        "control/fault_status": {
+          "literal": null,
+          "type": "boolean"
+        },
+        "control/hoist_at_center_feedback_status": {
+          "path": "DB920,X3.1",
+          "type": "boolean"
+        },
         "control/idle_feedback_status": "DB920,X204.0",
-        "control/stopping_request_status": "DB920,X233.0",
+        "control/stopping_request_status": {
+          "path": "DB920,X233.0",
+          "type": "boolean"
+        },
         "crane/driving_speed": {
           "path": "DB920,REAL22",
-          "type": "float",
-          "default": null
+          "type": "float"
         },
         "crane/driving_total_distance": {
           "path": "DB920,REAL30",
-          "type": "float",
-          "default": null
+          "type": "float"
         },
         "drive/left_result_status": "DB920,X12.3",
         "drive/right_feedback_status": "DB920,X34.3",
         "hoist/down_result_status": "DB920,X173.4",
         "hoist/height": {
           "path": "DB920,REAL178",
-          "type": "float",
-          "default": null
+          "type": "float"
         },
         "hoist/hoisting_speed": {
           "path": "DB920,REAL194",
-          "type": "float",
-          "default": null
+          "type": "float"
         },
         "hoist/trim_left_command_status": "DB920,X198.0",
         "hoist/trim_right_command_status": "DB920,X198.1",
@@ -114,8 +127,7 @@
         "spreader/size_45_ft_status": "DB920,X225.2",
         "spreader/size": {
           "path": "DB920,INT228",
-          "type": "int",
-          "default": null
+          "type": "int"
         },
         "spreader/skew_ccw_feedback_status": "DB920,X231.6",
         "spreader/skew_cw_feedback_status": "DB920,X232.0",
@@ -148,7 +160,7 @@
         },
         "@longitude": "Y:DB591,R354;X:DB591,R358/1",
         "@latitude": "Y:DB591,R354;X:DB591,R358/0",
-        "@datetime": "timestamp",
+        // "@datetime": "timestamp",
         "@friendlyName": "name",
         "parser/payload-version": {
           "literal": "2023/10"
@@ -162,7 +174,10 @@
         "che/tic_version": "TicVersion",
         "control/contactor_on_gantry1_result_status": "DB920,X1.6",
         "control/hoist_at_center_feedback_status": "DB920,X3.1",
-        "control/fault_status": "DB920,X173.0",
+        "control/fault_status": {
+          "path": "DB920,X173.0",
+          "type": "boolean"
+        },
         "control/idle_feedback_status": "DB920,X204.0",
         "control/stopping_request_status": "DB920,X233.0",
         "control/traction_wheels_parking_result_status": "DB920,X234.4",
@@ -223,7 +238,7 @@
         },
         "@latitude": "che.@.location.coordinate.ioutput.actual.value/0",
         "@longitude": "che.@.location.coordinate.ioutput.actual.value/1",
-        "@datetime": "msg.timestamp",
+        // "@datetime": "msg.timestamp",
         "@friendlyName": "che.@.name",
         "parser/payload-version": {
           "literal": "Semantic"
