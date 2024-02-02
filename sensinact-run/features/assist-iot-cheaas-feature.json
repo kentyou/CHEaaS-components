@@ -1,5 +1,5 @@
 {
-  "id": "com.kentyou.datahub.features:assist-iot-cheeas-feature:osgifeature:0.0.1-SNAPSHOT",
+  "id": "com.kentyou.datahub.features:assist-iot-cheaas-feature:osgifeature:0.0.1-SNAPSHOT",
   "bundles": [
     {
       "id": "org.eclipse.sensinact.gateway.southbound.device-factory:device-factory-core:0.0.2-SNAPSHOT"

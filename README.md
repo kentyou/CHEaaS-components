@@ -27,7 +27,7 @@ This project is released under the terms of the [Eclipse Public License v2.0](./
    mvn clean prepare-package
    ```
 3. Configure Eclipse sensiNact by editing `sensinact-run/configuration/configuration.json`
-   * Make sure the MQTT configuration is correct, in the `sensinact.southbound.mqtt~mqtt-cheeas` entry.
+   * Make sure the MQTT configuration is correct, in the `sensinact.southbound.mqtt~mqtt-cheaas` entry.
    See the [Eclipse sensiNact MQTT client documentation](https://eclipse-sensinact.readthedocs.io/en/latest/southbound/mqtt/mqtt-client.html#configuration) for more details.
 4. Run the Eclipse sensiNact instance
    ```bash

@@ -1,5 +1,5 @@
 {
-  "id":"org.eclipse.sensinact.gateway.distribution.features:cheeas-mqtt:core-feature:osgifeature:0.0.2-SNAPSHOT",
+  "id":"org.eclipse.sensinact.gateway.distribution.features:cheaas-mqtt:core-feature:osgifeature:0.0.2-SNAPSHOT",
   "bundles":[
     { "id": "com.fasterxml.jackson.core:jackson-annotations:2.16.1" },
     { "id": "com.fasterxml.jackson.core:jackson-core:2.16.1" },
