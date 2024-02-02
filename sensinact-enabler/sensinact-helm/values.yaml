@@ -4,10 +4,10 @@
 
 mqtt_host: edbe-edgedatabrokerx64-vernemq
 mqtt_port: 1883
-mqtt_topic_filter: assist-iot/cheeas/#
-mqtt_topic_v1: assist-iot/cheeas/v1/#
-mqtt_topic_v2: assist-iot/cheeas/v2
-mqtt_topic_v3: assist-iot/cheeas/v3
+mqtt_topic_filter: assist-iot/cheaas/#
+mqtt_topic_v1: assist-iot/cheaas/v1/#
+mqtt_topic_v2: assist-iot/cheaas/v2
+mqtt_topic_v3: assist-iot/cheaas/v3
 
 replicaCount: 1
 
