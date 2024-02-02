@@ -1,12 +1,12 @@
 services:
   sensinact-cheaas:
-    image: ghcr.io/kentyou/eclipse-sensinact-container/sensinact:0.0.2-snapshot
+    image: ghcr.io/kentyou/eclipse-sensinact-container/sensinact:0.0.2-SNAPSHOT
     stdin_open: true
     tty: true
     ports:
       - "8080:8080"
     volumes:
       - ./repository:/opt/sensinact/ext-repository:ro
-      - ./config/configuration.json:/opt/sensinact/configuration/configuration.json
-      - ./features:/opt/sensinact/ext-features
+      - ./features:/opt/sensinact/ext-features:ro
+      - ./config/configuration.json:/opt/sensinact/configuration/configuration.json:ro
     container_name: sensinact-cheaas
