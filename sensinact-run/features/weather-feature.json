@@ -1,0 +1,51 @@
+{
+  "id": "com.kentyou.datahub.features:device-factory-feature:osgifeature:0.0.2-SNAPSHOT",
+  "bundles": [
+    { "id": "org.eclipse.sensinact.gateway.southbound.device-factory:device-factory-core:0.0.2-SNAPSHOT" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.device-factory:parser-json:0.0.2-SNAPSHOT" },
+    { "id": "org.eclipse.jetty:jetty-client:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-alpn-client:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-http:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-io:11.0.13" },
+    { "id": "org.eclipse.jetty:jetty-util:11.0.13" },
+    { "id": "org.eclipse.sensinact.gateway.southbound.http:http-device-factory:0.0.2-SNAPSHOT" }
+  ],
+  "configurations": {
+    "sensinact.http.device.factory~weather_malta_freeport": {
+      "tasks.periodic": [
+        {
+          "period": 600,
+          "url": "https://api.open-meteo.com/v1/forecast?latitude=35.8171&longitude=14.5346&current_weather=true",
+          "mapping": {
+            "parser": "json",
+            "mapping": {
+              "@provider": {
+                "literal": "malta_freeport_weather"
+              },
+              "@name": {
+                "literal": "Malta Freeport Weather"
+              },
+              "@latitude": "latitude",
+              "@longitude": "longitude",
+              "@elevation": "elevation",
+              "@datetime": "current_weather/time",
+              "weather/temperature": {
+                "path": "current_weather/temperature",
+                "type": "float"
+              },
+              "weather/wind-speed": {
+                "path": "current_weather/windspeed",
+                "type": "float"
+              },
+              "weather/wind-direction": {
+                "path": "current_weather/winddirection",
+                "type": "int"
+              },
+              "weather/weather-code": "current_weather/weathercode"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -10,6 +10,7 @@
  */
 package com.kentyou.assistiot.cheaas.enabler.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.framework.Bundle;
@@ -17,6 +18,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleRevision;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kentyou.assistiot.cheaas.enabler.api.IAssistIoTHealthNorthbound;
 
 import jakarta.ws.rs.core.Context;
@@ -48,23 +51,37 @@ public class HealthNorthbound implements IAssistIoTHealthNorthbound {
 
     @Override
     public Response healthCheck() {
+        final Map<String, Integer> missingBundles = new HashMap<>();
         for (Bundle bundle : getBundleContext().getBundles()) {
             final int state = bundle.getState();
             final boolean isFragment = (bundle.adapt(BundleRevision.class).getTypes()
                     & BundleRevision.TYPE_FRAGMENT) != 0;
             if (state != Bundle.ACTIVE && !(isFragment && state == Bundle.RESOLVED)) {
                 // Found a bundle not active nor a fragment
-                return Response.status(503)
-                        .entity("Bundle " + bundle.getSymbolicName() + " not ready: " + bundle.getState()).build();
+                missingBundles.put(bundle.getSymbolicName(), bundle.getState());
+
             }
         }
-        return Response.ok().build();
+
+        final Map<String, Object> result = new HashMap<>();
+        final boolean invalidState = !missingBundles.isEmpty();
+        if (invalidState) {
+            result.put("error", "Some bundles are not in active state");
+            result.put("invalidBundles", missingBundles);
+            return Response.status(503).entity(result).build();
+        } else {
+            return Response.ok().build();
+        }
     }
 
     @Override
     public String getVersion() {
         // Use this bundle version
-        return getBundleContext().getBundle().getVersion().toString();
+        try {
+            return new ObjectMapper().writeValueAsString(getBundleContext().getBundle().getVersion().toString());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error converting version to JSON string", e);
+        }
     }
 
     @Override

@@ -27,7 +27,7 @@ This project is released under the terms of the [Eclipse Public License v2.0](./
    mvn clean prepare-package
    ```
 3. Configure Eclipse sensiNact by editing `sensinact-run/configuration/configuration.json`
-   * Make sure the MQTT configuration is correct, in the `sensinact.southbound.mqtt~mqtt-cheeas` entry.
+   * Make sure the MQTT configuration is correct, in the `sensinact.southbound.mqtt~mqtt-cheaas` entry.
    See the [Eclipse sensiNact MQTT client documentation](https://eclipse-sensinact.readthedocs.io/en/latest/southbound/mqtt/mqtt-client.html#configuration) for more details.
 4. Run the Eclipse sensiNact instance
    ```bash
@@ -65,7 +65,7 @@ To test the bridge, you can replay a sample of the CHE data available in the [AS
 ### Run the sender script in Docker
 
 1. Download a data sample. We will then consider its name is `payload.json`
-2. Copy `payload.json` to the `data-sender/` folder
+2. Copy `payload.json` to the `data-sender/data` folder
 3. Update the `data-sender/compose.yaml` file to ensure that:
    * the input payload binding is correct
    * the script `--input` argument points to the right place

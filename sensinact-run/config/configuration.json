@@ -12,9 +12,9 @@
       "jakarta-servlet-whiteboard-feature",
       "jakarta-rest-whiteboard-feature",
       "northbound-rest-feature",
-      "kentyou-extras-feature",
       "gogo-shell-feature",
-      "assist-iot-cheeas-feature"
+      "assist-iot-cheaas-feature",
+      "weather-feature"
     ],
     "featureDir": [
       "/opt/sensinact/features",
@@ -37,18 +37,5 @@
   "JakartarsServletWhiteboardRuntimeComponent": {
     "osgi.http.whiteboard.target": "(osgi.http.endpoint=*)",
     "osgi.jakartars.name": "sensiNact.rest"
-  },
-  "sensinact.southbound.mqtt~mqtt-cheeas": {
-    "host": "broker.hivemq.com",
-    "port": 1883,
-    "topics": [
-      "assist-iot/#"
-    ],
-    "id": "mqtt-cheaas"
-  },
-  "sensinact.mqtt.device.factory~assist-iot": {
-    "mqtt.handler.id": "mqtt-cheaas",
-    "mapping": "{\"parser\":\"json\",\"mapping\":{\"$sender\":\"sender\",\"@model\":{\"literal\":\"assist-iot-che\"},\"@provider\":{\"literal\":\"che-${sender}\"},\"@latitude\":\"Y:DB591,R354;X:DB591,R358/0\",\"@longitude\":\"Y:DB591,R354;X:DB591,R358/1\",\"@datetime\":\"timestamp\",\"@friendlyName\":\"name\",\"che/id\":\"id\",\"che/name\":\"name\",\"che/type\":\"type\",\"che/brand\":\"brand\",\"che/number\":\"number\",\"che/family\":\"family\",\"che/tic-version\":\"TicVersion\",\"control/contactor-on-gantry1-result-status\":\"DB920,X1.6\",\"control/control-hoist-at-center-feedback-status\":\"DB920,X3.1\",\"drive/left-result-status\":\"DB920,X12.3\",\"drive/right-feedback-status\":\"DB920,X34.3\",\"hoist/hoist-trim-left-command-status\":\"DB920,X198.0\",\"hoist/hoist-trim-right-command-status\":\"DB920,X198.1\",\"hoist/up-result-status\":\"DB920,X198.4\",\"hoist/down-result-status\":\"DB920,X173.4\",\"control/idle-feedback-status\":\"DB920,X204.0\",\"spreader/size-20-ft-status\":\"DB920,X224.3\",\"spreader/size-30-ft-status\":\"DB920,X224.4\",\"spreader/size-40-ft-status\":\"DB920,X224.7\",\"spreader/size-45-ft-status\":\"DB920,X225.2\",\"spreader/all-flipper-down-status\":\"DB920,X225.3\",\"spreader/all-flipper-up-status\":\"DB920,X225.4\",\"spreader/any-flipper-down-status\":\"DB920,X225.5\",\"spreader-unsure/spreader-expanding-request-status\":\"DB920,X225.7\",\"spreader/retracting-request-status\":\"DB920,X226.0\",\"spreader/landed-status\":\"DB920,X226.1\",\"spreader/lashinggage-feedback-status\":\"DB920,X226.2\",\"spreader-unsure/spreader-list-reverse-request-status\":\"DB920,X230.3\",\"spreader/lock-status\":\"DB920,X230.6\",\"spreader/single-result-status\":\"DB920,X231.4\",\"spreader/skew-ccw-feedback-status\":\"DB920,X231.6\",\"spreader/skew-cw-feedback-status\":\"DB920,X232.0\",\"spreader/twin-status\":\"DB920,X232.4\",\"spreader/unlock-status\":\"DB920,X232.7\",\"control/stopping-request-status\":\"DB920,X233.0\",\"control/traction-wheels-parking-result-status\":\"DB920,X234.4\",\"trolley/backreach-status\":\"DB920,X234.6\",\"trolley/forward-result-status\":\"DB920,X235.4\",\"trolley/trolley-land-feedback-status\":\"DB920,X240.1\",\"trolley/on-status\":\"DB920,X240.2\",\"trolley/troll-reverse-result-status\":\"DB920,X246.2\",\"trolley/troll-sea-feedback-status\":\"DB920,X256.0\",\"control/fault-status\":\"DB920,X173.0\",\"crane/driving-speed\":\"DB920,REAL22\",\"crane/driving-speed-unit\":{\"literal\":\"m/s\"},\"crane/driving-total-distance\":\"DB920,REAL30\",\"crane/location-accuracy\":\"DB920,REAL156\",\"hoist/height\":\"DB920,REAL178\",\"hoist/hoisting-speed\":\"DB920,REAL194\",\"hoist/hoisting-speed-unit\":{\"literal\":\"m/min\"},\"spreader/size\":\"DB920,INT228\"}}",
-    "mqtt.topics": "assist-iot/push"
   }
 }

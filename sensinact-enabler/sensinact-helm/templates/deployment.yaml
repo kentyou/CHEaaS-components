@@ -44,8 +44,14 @@ spec:
               value: {{ .Values.mqtt_host | quote }}
             - name: MQTT_PORT
               value: {{ .Values.mqtt_port | toString | quote }}
-            - name: MQTT_TOPIC
-              value: {{ .Values.mqtt_topic | quote }}
+            - name: MQTT_TOPIC_FILTER
+              value: {{ .Values.mqtt_topic_filter | quote }}
+            - name: MQTT_TOPIC_V1
+              value: {{ .Values.mqtt_topic_v1 | quote }}
+            - name: MQTT_TOPIC_V2
+              value: {{ .Values.mqtt_topic_v2 | quote }}
+            - name: MQTT_TOPIC_V3
+              value: {{ .Values.mqtt_topic_v3 | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

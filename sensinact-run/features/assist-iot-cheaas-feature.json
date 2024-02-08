@@ -1,0 +1,283 @@
+{
+  "id": "com.kentyou.datahub.features:assist-iot-cheaas-feature:osgifeature:0.0.1-SNAPSHOT",
+  "bundles": [
+    {
+      "id": "org.eclipse.sensinact.gateway.southbound.device-factory:device-factory-core:0.0.2-SNAPSHOT"
+    },
+    {
+      "id": "org.eclipse.sensinact.gateway.southbound.device-factory:parser-json:0.0.2-SNAPSHOT"
+    },
+    {
+      "id": "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5"
+    },
+    {
+      "id": "org.eclipse.sensinact.gateway.southbound.mqtt:mqtt-client:0.0.2-SNAPSHOT"
+    },
+    {
+      "id": "org.eclipse.sensinact.gateway.southbound.mqtt:mqtt-device-factory:0.0.2-SNAPSHOT"
+    }
+  ],
+  "configurations": {
+    "sensinact.southbound.mqtt~cheaas": {
+      "id": "mqtt-cheaas",
+      "host": "mqtt-assist-iot",
+      "port": 1883,
+      "topics": [
+        "assist-iot/#"
+      ]
+    },
+    "sensinact.mqtt.device.factory~assist-iot-v1": {
+      "mqtt.handler.id": "mqtt-cheaas",
+      "mqtt.topics": "assist-iot/v1/#",
+      "mapping": {
+        "parser": "json",
+        "mapping.options": {
+          "log.errors": true
+        },
+        "mapping": {
+          "@model": {
+            "literal": "assist-iot-che"
+          },
+          "@provider": {
+            "literal": "che-${context.topic-last}"
+          },
+          "@latitude": "DB591,R354",
+          "@longitude": "DB591,R358",
+          // "@timestamp": "_timestamp",
+          "parser/payload-version": {
+            "literal": "2023/09"
+          },
+          "control/contactor_on_gantry1_result_status": {
+            "path": "DB920,X1.6",
+            "type": "boolean"
+          },
+          "control/fault_status": {
+            "literal": null,
+            "type": "boolean"
+          },
+          "control/hoist_at_center_feedback_status": {
+            "path": "DB920,X3.1",
+            "type": "boolean"
+          },
+          "control/idle_feedback_status": "DB920,X204.0",
+          "control/stopping_request_status": {
+            "path": "DB920,X233.0",
+            "type": "boolean"
+          },
+          "crane/driving_speed": {
+            "path": "DB920,REAL22",
+            "type": "float"
+          },
+          "crane/driving_total_distance": {
+            "path": "DB920,REAL30",
+            "type": "float"
+          },
+          "drive/left_result_status": "DB920,X12.3",
+          "drive/right_feedback_status": "DB920,X34.3",
+          "hoist/down_result_status": "DB920,X173.4",
+          "hoist/height": {
+            "path": "DB920,REAL178",
+            "type": "float"
+          },
+          "hoist/hoisting_speed": {
+            "path": "DB920,REAL194",
+            "type": "float"
+          },
+          "hoist/trim_left_command_status": "DB920,X198.0",
+          "hoist/trim_right_command_status": "DB920,X198.1",
+          "hoist/up_result_status": "DB920,X198.4",
+          "spreader/all_flipper_down_status": "DB920,X225.3",
+          "spreader/all_flipper_up_status": "DB920,X225.4",
+          "spreader/any_flipper_down_status": "DB920,X225.5",
+          "spreader/expanding_request_status": "DB920,X225.7",
+          "spreader/landed_status": "DB920,X226.1",
+          "spreader/lashinggage_feedback_status": "DB920,X226.2",
+          "spreader/list_reverse_request_status": "DB920,X230.3",
+          "spreader/lock_status": "DB920,X230.6",
+          "spreader/retracting_request_status": "DB920,X226.0",
+          "spreader/single_result_status": "DB920,X231.4",
+          "spreader/size_20_ft_status": "DB920,X224.3",
+          "spreader/size_30_ft_status": "DB920,X224.4",
+          "spreader/size_40_ft_status": "DB920,X224.7",
+          "spreader/size_45_ft_status": "DB920,X225.2",
+          "spreader/size": {
+            "path": "DB920,INT228",
+            "type": "int"
+          },
+          "spreader/skew_ccw_feedback_status": "DB920,X231.6",
+          "spreader/skew_cw_feedback_status": "DB920,X232.0",
+          "spreader/twin_status": "DB920,X232.4",
+          "spreader/unlock_status": "DB920,X232.7",
+          "trolley/backreach_status": "DB920,X234.6",
+          "trolley/forward_result_status": "DB920,X235.4",
+          "trolley/land_feedback_status": "DB920,X240.1",
+          "trolley/on_status": "DB920,X240.2",
+          "trolley/troll_reverse_result_status": "DB920,X246.2",
+          "trolley/troll_sea_feedback_status": "DB920,X256.0"
+        }
+      }
+    },
+    "sensinact.mqtt.device.factory~assist-iot-v2": {
+      "mqtt.handler.id": "mqtt-cheaas",
+      "mqtt.topics": "assist-iot/v2",
+      "mapping": {
+        "parser": "json",
+        "mapping.options": {
+          "log.errors": true
+        },
+        "mapping": {
+          "$sender": "sender",
+          "@model": {
+            "literal": "assist-iot-che"
+          },
+          "@provider": {
+            "literal": "che-${sender}"
+          },
+          "@longitude": "Y:DB591,R354;X:DB591,R358/1",
+          "@latitude": "Y:DB591,R354;X:DB591,R358/0",
+          // "@datetime": "timestamp",
+          "@friendlyName": "name",
+          "parser/payload-version": {
+            "literal": "2023/10"
+          },
+          "che/id": "id",
+          "che/name": "name",
+          "che/type": "type",
+          "che/brand": "brand",
+          "che/number": "number",
+          "che/family": "family",
+          "che/tic_version": "TicVersion",
+          "control/contactor_on_gantry1_result_status": "DB920,X1.6",
+          "control/hoist_at_center_feedback_status": "DB920,X3.1",
+          "control/fault_status": {
+            "path": "DB920,X173.0",
+            "type": "boolean"
+          },
+          "control/idle_feedback_status": "DB920,X204.0",
+          "control/stopping_request_status": "DB920,X233.0",
+          "control/traction_wheels_parking_result_status": "DB920,X234.4",
+          "crane/driving_speed": "DB920,REAL22",
+          "crane/driving_total_distance": "DB920,REAL30",
+          "crane/location_accuracy": "DB920,REAL156",
+          "drive/left_result_status": "DB920,X12.3",
+          "drive/right_feedback_status": "DB920,X34.3",
+          "hoist/down_result_status": "DB920,X173.4",
+          "hoist/height": "DB920,REAL178",
+          "hoist/hoisting_speed": "DB920,REAL194",
+          "hoist/trim_left_command_status": "DB920,X198.0",
+          "hoist/trim_right_command_status": "DB920,X198.1",
+          "hoist/up_result_status": "DB920,X198.4",
+          "spreader/all_flipper_down_status": "DB920,X225.3",
+          "spreader/all_flipper_up_status": "DB920,X225.4",
+          "spreader/any_flipper_down_status": "DB920,X225.5",
+          "spreader/expanding_request_status": "DB920,X225.7",
+          "spreader/landed_status": "DB920,X226.1",
+          "spreader/lashinggage_feedback_status": "DB920,X226.2",
+          "spreader/list_reverse_request_status": "DB920,X230.3",
+          "spreader/lock_status": "DB920,X230.6",
+          "spreader/retracting_request_status": "DB920,X226.0",
+          "spreader/single_result_status": "DB920,X231.4",
+          "spreader/size_20_ft_status": "DB920,X224.3",
+          "spreader/size_30_ft_status": "DB920,X224.4",
+          "spreader/size_40_ft_status": "DB920,X224.7",
+          "spreader/size_45_ft_status": "DB920,X225.2",
+          "spreader/size": "DB920,INT228",
+          "spreader/skew_ccw_feedback_status": "DB920,X231.6",
+          "spreader/skew_cw_feedback_status": "DB920,X232.0",
+          "spreader/twin_status": "DB920,X232.4",
+          "spreader/unlock_status": "DB920,X232.7",
+          "trolley/backreach_status": "DB920,X234.6",
+          "trolley/forward_result_status": "DB920,X235.4",
+          "trolley/land_feedback_status": "DB920,X240.1",
+          "trolley/on_status": "DB920,X240.2",
+          "trolley/troll_reverse_result_status": "DB920,X246.2",
+          "trolley/troll_sea_feedback_status": "DB920,X256.0"
+        }
+      }
+    },
+    "sensinact.mqtt.device.factory~assist-iot-v3": {
+      "mqtt.handler.id": "mqtt-cheaas",
+      "mqtt.topics": "assist-iot/v3",
+      "mapping": {
+        "parser": "json",
+        "mapping.options": {
+          "log.errors": true
+        },
+        "mapping": {
+          "$sender": "msg.sender",
+          "@model": {
+            "literal": "assist-iot-che"
+          },
+          "@provider": {
+            "literal": "che-${sender}"
+          },
+          "@latitude": "che.@.location.coordinate.ioutput.actual.value/0",
+          "@longitude": "che.@.location.coordinate.ioutput.actual.value/1",
+          // "@datetime": "msg.timestamp",
+          "@friendlyName": "che.@.name",
+          "parser/payload-version": {
+            "literal": "Semantic"
+          },
+          "che/data_format": "msg.version",
+          "che/id": "che.@.id",
+          "che/name": "che.@.name",
+          "che/type": "che.@.type",
+          "che/brand": "che.@.brand",
+          "che/number": "che.@.number",
+          "che/family": "che.@.family",
+          "che/tic_version": {
+            "literal": null,
+            "type": "string"
+          },
+          "control/contactor_on_gantry1_result_status": "che.@.control.@.locationtechnicalatcabin.status.output.actual.value",
+          "control/hoist_at_center_feedback_status": "che.@.hoist.@.idle.input_or_output.actual.value",
+          "control/fault_status": {
+            "literal": null,
+            "type": "boolean"
+          },
+          "control/idle_feedback_status": "che.@.idle.status.ioutput.actual.value",
+          "control/stopping_request_status": "che.@.alignment.@.trafficlight.@.stop.status.output.actual.value",
+          "crane/driving_speed": "che.@.drive.@.driving.speed.output.actual.#unit#meter_per_minute.value",
+          "crane/driving_total_distance": "che.@.drive.@.driving.distance.output.actual.#unit#meter.value",
+          "crane/location_accuracy": "che.@.location.coordinate.output.actual.accuracy",
+          "drive/left_result_status": "che.@.drive.@.left.status.output.actual.value",
+          "drive/right_feedback_status": "che.@.drive.@.right.status.output.actual.value",
+          "hoist/down_result_status": "che.@.hoist.@.down.status.output.actual.value",
+          "hoist/height": "che.@.hoist.@.hoisting.height.output.actual.#unit#meter.value",
+          "hoist/hoisting_speed": "che.@.hoist.@.hoisting.speed.output.actual.#unit#meter_per_minute.value",
+          "hoist/trim_left_command_status": "che.@.hoist.@.trimleft.status.ioutput.actual.value",
+          "hoist/trim_right_command_status": "che.@.hoist.@.trimright.status.ioutput.actual.value",
+          "hoist/up_result_status": "che.@.hoist.@.up.status.output.actual.value",
+          "spreader/all_flipper_down_status": "che.@.spreader.@.allflippersdown.status.ioutput.actual.value",
+          "spreader/all_flipper_up_status": "che.@.spreader.@.allflippersup.status.ioutput.actual.value",
+          "spreader/any_flipper_down_status": "che.@.spreader.@.anyflipperdown.status.output.actual.value",
+          "spreader/expanding_request_status": "che.@.spreader.@.extending.status.output.actual.value",
+          "spreader/landed_status": "che.@.spreader.@.landed.status.ioutput.actual.value",
+          "spreader/lashinggage_feedback_status": "che.@.spreader.@.lashinggage.status.ioutput.actual.value",
+          "spreader/list_reverse_request_status": "che.@.spreader.@.listingreverse.status.ioutput.actual.value",
+          "spreader/lock_status": "che.@.spreader.@.locked.status.output.actual.value",
+          "spreader/retracting_request_status": "che.@.spreader.@.retracting.status.ioutput.actual.value",
+          "spreader/single_result_status": "che.@.spreader.@.single.status.ioutput.actual.value",
+          "spreader/size_20_ft_status": "che.@.spreader.@.size20foot.status.output.actual.value",
+          "spreader/size_30_ft_status": "che.@.spreader.@.size30foot.status.output.actual.value",
+          "spreader/size_40_ft_status": "che.@.spreader.@.size40foot.status.output.actual.value",
+          "spreader/size_45_ft_status": "che.@.spreader.@.size45foot.status.output.actual.value",
+          "spreader/size": "che.@.spreader.@.size.length.output.actual.value",
+          "spreader/skew_ccw_feedback_status": "che.@.spreader.@.skewingccw.status.input.actual.value",
+          "spreader/skew_cw_feedback_status": "che.@.spreader.@.skewingcw.status.input.actual.value",
+          "spreader/twin_status": "che.@.spreader.@.twin.status.input.actual.value",
+          "spreader/unlock_status": "che.@.spreader.@.unlocked.status.output.actual.value",
+          "trolley/backreach_status": {
+            "literal": null,
+            "type": "boolean"
+          },
+          "trolley/forward_result_status": "che.@.trolley.@.forward.status.output.actual.value",
+          "trolley/land_feedback_status": "che.@.trolley.@.atlandside.status.ioutput.actual.value",
+          "trolley/on_status": "che.@.trolley.@.on.status.ioutput.actual.value",
+          "trolley/troll_reverse_result_status": "che.@.trolley.@.reverse.status.output.actual.value",
+          "trolley/troll_sea_feedback_status": "che.@.trolley.@.atsea.status.ioutput.actual.value"
+        }
+      }
+    }
+  }
+}
