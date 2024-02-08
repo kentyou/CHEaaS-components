@@ -37,6 +37,16 @@ This repository contains:
    ```
 4. Test the presence of the instance connecting <http://localhost:8080/sensinact/provider>
 
+### Reminder: how to start the Edge Data Broker Enabler
+
+The Eclipse sensiNact enabler requires the Edge Data Broker Enabler to be up and running to be able to receive messages from the Container Handling Equipment.
+Here are the commands to execute to start it:
+
+1. Register the ASSIST-IoT public repository as an Helm repository: `helm repo add assist-public-repo https://gitlab.assist-iot.eu/api/v4/projects/85/packages/helm/stable`
+2. Deploy the EDBE Helm Chart: `helm install edbe assist-public-repo/edgedatabrokerx64`
+
+**Note:** Depending on the K3S setup, it can be necessary to indicate to the Helm command where to find the Kubernetes configuration using `--kubeconfig /etc/rancher/k3s/k3s.yaml`.
+
 ## Running with a local Docker registry
 
 If necessary, here are the actions to take to use a local Docker registry.
